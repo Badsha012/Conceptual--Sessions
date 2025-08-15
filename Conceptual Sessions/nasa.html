@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ocean Plastic Pollution Mapper</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map { height: 100vh; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // ম্যাপ সেটআপ
+        var map = L.map('map').setView([20.0, 90.0], 4);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18
+        }).addTo(map);
+
+        // উদাহরণস্বরূপ দূষণের পয়েন্ট
+        var pollutionData = [
+            { lat: 21.5, lng: 92.0, level: "High" },
+            { lat: 18.0, lng: 88.0, level: "Medium" },
+            { lat: 24.0, lng: 94.0, level: "Low" }
+        ];
+
+        pollutionData.forEach(function(p) {
+            var color = p.level === "High" ? "red" : p.level === "Medium" ? "orange" : "green";
+            L.circle([p.lat, p.lng], {
+                color: color,
+                radius: 50000
+            }).bindPopup("Pollution Level: " + p.level).addTo(map);
+        });
+    </script>
+</body>
+</html>
